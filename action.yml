@@ -1,0 +1,24 @@
+name: docker compose
+description: 'up docker compose ci env'
+
+branding:
+  icon: 'archive'
+  color: 'blue'
+
+inputs:
+  docker-compose-file:
+    required: false
+    description: docker-compose.yml path
+    default: docker-compose.ci.yml
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Cache Docker images.
+      uses: ScribeMD/docker-cache@0.2.8
+      with:
+        key: docker-${{ runner.os }}-${{ hashFiles('**/docker-compose.ci.yml') }}
+
+    - name: Build the stack
+      shell: sh
+      run: docker-compose -f $${{ inputs.docker-compose-file }}  up -d
