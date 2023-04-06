@@ -21,4 +21,4 @@ runs:
 
     - name: Build the stack
       shell: sh
-      run: docker-compose -f $${{ inputs.docker-compose-file }}  up -d
+      run: docker-compose -f ${{ inputs.docker-compose-file }}  up -d
