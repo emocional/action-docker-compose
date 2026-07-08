@@ -14,11 +14,11 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Cache Docker images.
+    - name: Cache Docker images
       uses: ScribeMD/docker-cache@0.5.0
       with:
-        key: docker-${{ runner.os }}-${{ hashFiles('**/docker-compose.ci.yml') }}
+        key: docker-${{ runner.os }}-${{ hashFiles(format('{0}', inputs.docker-compose-file)) }}
 
     - name: Build the stack
       shell: sh
-      run: docker compose -f ${{ inputs.docker-compose-file }}  up -d
+      run: docker compose -f ${{ inputs.docker-compose-file }} up -d
